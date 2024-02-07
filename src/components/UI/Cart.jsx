@@ -3,8 +3,8 @@ import Modal from "./Modal.jsx";
 import CartContext from "../Store/CartContext.jsx";
 import Button from "./Button.jsx";
 import { currencyFormatter } from "../../Utils/Formatting.js";
-import UserProgressContext from "../Store/UserProgressContect.jsx";
 import CartItem from "./CartItem.jsx";
+import UserProgressContext from "../Store/UserProgressContect.jsx";
 
 export default function Cart() {
   const cartCtx = useContext(CartContext);
@@ -18,8 +18,17 @@ export default function Cart() {
   function handleCloseCart() {
     UserProgressCtx.hideCart();
   }
+
+  function handelGoToCheckout() {
+    UserProgressCtx.showCheckOut();
+  }
+
   return (
-    <Modal className="Cart" open={UserProgressCtx.process === "cart"}>
+    <Modal
+      className="Cart"
+      open={UserProgressCtx.process === "cart"}
+      onClose={UserProgressCtx.process === "cart" ? handleCloseCart : null}
+    >
       <h2>Your cart</h2>
       <ul>
         {cartCtx.items.map((item) => (
@@ -39,7 +48,9 @@ export default function Cart() {
         <Button textOnly onClick={handleCloseCart}>
           Close
         </Button>
-        <Button onClick={handleCloseCart}> Go to Checkout </Button>
+        {cartCtx.items.length > 0 && (
+          <Button onClick={() => handelGoToCheckout()}> Go to Checkout </Button>
+        )}
       </p>
     </Modal>
   );

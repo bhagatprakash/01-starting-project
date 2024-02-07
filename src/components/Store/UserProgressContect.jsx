@@ -22,17 +22,19 @@ export function UserProgressContextProvider({ children }) {
   function showCheckOut() {
     setuserProgress("checkout");
   }
+
   function hideCheckOut() {
     setuserProgress("");
   }
 
   const userProgressCtx = {
     process: userProgress,
-    showCart,
-    hideCart,
-    showCheckOut,
-    hideCheckOut,
+    showCart: showCart,
+    hideCart: hideCart,
+    showCheckOut: showCheckOut,
+    hideCheckOut: hideCheckOut,
   };
+
   return (
     <UserProgressContext.Provider value={userProgressCtx}>
       {children}
